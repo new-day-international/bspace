@@ -73,11 +73,11 @@ class BaseMigration < ActiveRecord::Migration
 			t.timestamps
 		end
 
-		add_index :media, :site_id
+		add_index :media, :space_id
 		add_index :media, :user_id
 		add_index :media, :category_id
-		add_index :media, [ :type, :site_id ]
-		add_index :media, [ :slug, :site_id ], 	unique: true
+		add_index :media, [ :type, :space_id ]
+		add_index :media, [ :slug, :space_id ], 	unique: true
 
 
 		create_table :oauth_credentials do |t|
@@ -96,17 +96,14 @@ class BaseMigration < ActiveRecord::Migration
 
 
 		create_table :roles do	|t|
-			t.references 	:site
 			t.string 		:name
 			t.timestamps
 		end
 
 		add_index :roles, :name
-		add_index :roles, :site_id
 
 
 		create_table :spaces, :force => true do |t|
-			t.references	:user
 			t.string		:name
 			t.string		:display_name
 			t.text 			:description
@@ -119,9 +116,8 @@ class BaseMigration < ActiveRecord::Migration
 			t.string		:availability,		default: :public
 			t.timestamps
 		end
-
-		add_index :spaces, :user_id
 		add_index :spaces, :name
+		
 
 		create_table :space_memberships do |t|
 			t.references 	:user

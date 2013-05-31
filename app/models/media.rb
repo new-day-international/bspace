@@ -1,5 +1,5 @@
 class Media < ActiveRecord::Base
-	attr_protected :user_id, :site_id, :parent_id
+	attr_protected :user_id, :space_id, :parent_id
 	attr_accessor :url
 	
 	### FILTERS		--------------------------------------
@@ -14,7 +14,7 @@ class Media < ActiveRecord::Base
 	### RELATIONSHIPS   	-------------------------------
 	belongs_to	:user #the creator'
 	belongs_to	:category
-	belongs_to	:site
+	belongs_to	:space
 
 	has_many	:content_subscriptions, :as => :parent_object, :dependent => :destroy
 	has_many	:subscribers, :through => :content_subscriptions, :source => :user, conditions: "content_subscriptions.status = 'active'"
@@ -22,7 +22,7 @@ class Media < ActiveRecord::Base
 
 	### Plugins  	--------------------------------------
 	extend FriendlyId
-  	friendly_id :slugger, :use => :scoped, :scope => :site
+  	friendly_id :slugger, :use => :scoped, :scope => :space
 
 	acts_as_taggable
 
@@ -120,7 +120,7 @@ class Media < ActiveRecord::Base
 	def full_path( args={} )
 		controller = args[:controller] || self.type.tableize
 		args.merge!( { :controller => controller } )
-		self.site.http_url + self.path( args )
+		self.space.http_url + self.path( args )
 	end
 
 	def slugger

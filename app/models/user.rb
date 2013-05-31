@@ -24,7 +24,7 @@ class User < ActiveRecord::Base #SwellUsers::User
 	# Include default devise modules. Others available are:
 	# :token_authenticatable, :confirmable,
 	# :lockable, :timeoutable and :omniauthable
-	devise :database_authenticatable, :omniauthable, :registerable, :recoverable, :rememberable, :trackable, authentication_keys: [ :login ]
+	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, authentication_keys: [ :login ]
 
 	extend FriendlyId
 	  	friendly_id :name, use: :slugged

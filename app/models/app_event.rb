@@ -9,7 +9,7 @@ class AppEvent < ActiveRecord::Base
 	### RELATIONSHIPS   	--------------------------------------
 	belongs_to 	:user
 	belongs_to	:owner, polymorphic: true
-	belongs_to	:site
+	belongs_to	:space
 	belongs_to	:referring_user, class_name: 'User', foreign_key: :referring_user_id
 	belongs_to 	:guest, class_name: 'User', foreign_key: :guid
 
@@ -91,7 +91,7 @@ class AppEvent < ActiveRecord::Base
 		event = event.to_s
 		user = args[:user]
 		parent_obj = args[:on]
-		site = args[:site] || owner.try( :site ) || user.site
+		space = args[:space] || parent_obj.try( :space ) || Space.last
 		rate = args[:rate] || 1.minute
 		ip = args[:request].try( :ip )
 		path = args[:request].try( :path )
@@ -108,7 +108,7 @@ class AppEvent < ActiveRecord::Base
 			return false if self.where( event: event, user_id: user.id ).by_ip( ip ).by_object( parent_obj ).within_last( rate ).count > 0
 		end
 
-		app_event = self.create( site_id: site.id, parent_obj_id: parent_obj.try( :id ), parent_obj_type: parent_obj_type,
+		app_event = self.create( space_id: space.id, parent_obj_id: parent_obj.try( :id ), parent_obj_type: parent_obj_type,
 						user_id: user.id, participant_id: args[:pid], referring_user_id: referring_user_id,
 						event: event, value: args[:value], request: args[:request],
 						content: args[:content], extra_data: args[:extra_data] )

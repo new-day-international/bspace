@@ -2,7 +2,11 @@ class ApplicationController < ActionController::Base
 	protect_from_forgery
 	layout 'application'
 
+	http_basic_authenticate_with :name => "gameb", :password => "playa"
+
 	before_filter :initialize_session
+
+
 
 	rescue_from CanCan::AccessDenied do |exception|
     	flash[:error] = exception.message
@@ -45,7 +49,7 @@ class ApplicationController < ActionController::Base
 		@metatags = args
 		@metatags[:title] ||= request.domain
 		@metatags[:description] = args[:description][0..200] unless args[:description].blank?
-		@metatags[:description] = @current_site.description
+		@metatags[:description] = @current_space.present? ? @current_space.description : nil
 		
 	end
 

@@ -1,0 +1,67 @@
+!!!strict
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+%head
+	%title
+		= @metatags[:title]
+
+	%meta{ name: :description, content: @metatags[:description] }
+
+	%meta{ name: 'viewport', content: 'width=device-width', 'initial-scale' => '1.0' }
+
+	= stylesheet_link_tag 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/smoothness/jquery-ui.css'
+	= stylesheet_link_tag 	'application'
+	
+	= javascript_include_tag 'application'
+	= javascript_include_tag 'vendor/custom.modernizr'
+
+	= csrf_meta_tags
+%body
+	.container
+		= render 'homepage/nav'
+		.row
+			.small-12.columns
+				= render 'partials/flash', flash: flash
+		.row
+			.small-12.columns
+				= yield
+		.push
+
+	.footer{ style: 'background:#fff;' }
+		.row.footer-row
+			.small-12.columns
+				.footer-content
+					- if params[:debug]
+						user:
+						= @current_user || 'Nil'
+
+						subd:
+						= request.subdomain
+						site: 
+						= @current_site
+
+					%a{ href: 'http://groundswellenterprises.com'  }
+						%img{ src: '/assets/groundswell_logo.png', width: 24, valign: :bottom }
+						Groundswell Enterprises, LLC
+					
+					- if params[:debug]
+						- if signed_in?
+							%a{ href: main_app.admin_index_path }
+								%i.icon-cogs
+								Admin
+							|
+							%a{ href: '/users/sign_out', data: { method: :delete } }
+								%i.icon-signout
+								Sign Out
+						- else
+							%a{ href: 'users/sign_in' }
+								%i.icon-signin
+								Login
+
+	
+
+	= render 'partials/google_analytics'
+</html>
