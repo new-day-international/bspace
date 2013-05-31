@@ -1,0 +1,13 @@
+development:
+  adapter: postgresql
+  host: localhost
+  username: postgres
+  password: gkgk
+  database: bspace_dev
+
+test:
+  adapter: postgresql
+  host: localhost
+  username: postgres
+  password: gkgk
+  database: bspace_test

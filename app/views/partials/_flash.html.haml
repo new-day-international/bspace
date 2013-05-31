@@ -1,0 +1,6 @@
+- unless flash.nil? || flash.empty?
+	- flash.each do |key, value|
+		- next if value.blank?
+		.alert-box.radius{ class: key, 'data-alert' => '' }
+			= raw value
+			= link_to 'x', '#', class: 'close'
