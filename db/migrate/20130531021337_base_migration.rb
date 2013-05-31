@@ -39,6 +39,46 @@ class BaseMigration < ActiveRecord::Migration
 		end
 		add_index :contacts, :user_id
 
+		create_table :media, :force => true do |t|
+			t.references 		:space
+			t.references  		:user
+			t.references  		:parent
+			t.references  		:category
+			t.string   			:type
+			t.integer			:lft
+			t.integer			:rgt
+			t.string 			:title
+			t.string			:subtitle
+			t.string			:title_tag
+			t.string			:uri
+			t.string 			:avatar
+			t.text				:description
+			t.text				:content
+			t.string			:status,					default: :published
+			t.string			:availability,				default: :public
+			t.datetime			:publication_date
+			t.datetime			:publish_at
+			t.datetime			:modified_at
+			t.integer			:seq
+			t.string			:slug
+			t.boolean 			:is_explicit,				default: false
+			t.boolean			:is_commentable,			default: true
+			t.boolean			:is_featured,				default: false
+			t.boolean			:is_sticky,					default: false
+			t.boolean			:is_shareable
+			t.boolean			:is_title_visible
+			t.boolean			:email_author_on_comment,	default: true
+			t.string			:redirect_path
+			t.integer			:cached_view_count,			default: 0
+			t.timestamps
+		end
+
+		add_index :media, :site_id
+		add_index :media, :user_id
+		add_index :media, :category_id
+		add_index :media, [ :type, :site_id ]
+		add_index :media, [ :slug, :site_id ], 	unique: true
+
 
 		create_table :oauth_credentials do |t|
 			t.references	:user
