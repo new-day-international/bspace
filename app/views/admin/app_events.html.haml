@@ -1,0 +1,37 @@
+.row
+	.six.columns
+		%h2 App Events
+	.six.columns
+		
+
+
+- if @events.empty?
+	.row
+		.six.columns.centered
+			.panel.radius
+				%h5 No Events
+- else
+	.row
+		.twelve.columns
+			%table.twelve.columns
+				%thead
+					%th 
+					%th ip
+					%th referrer
+					%th path
+					%th participant?
+				%tbody
+					- @events.each do |event|
+						%tr
+							%td
+								= render event
+							%td
+								= event.ip
+							%td
+								= event.http_referrer
+							%td
+								= event.path
+							%td
+								= event.participant_id
+	.row
+		= raw paginate @events

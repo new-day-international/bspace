@@ -18,6 +18,11 @@ class User < ActiveRecord::Base #SwellUsers::User
 	### RELATIONSHIPS   	--------------------------------------
 	has_many 	:user_roles, dependent: :destroy
 	has_many	:roles, through: :user_roles
+
+	has_many 	:created_nominations, class_name: 'Nomination', foreign_key: :creator_id
+	has_many	:nominated_users, through: :created_nominations, source: :user
+	
+	has_one 	:nomination
 	
 
 	### Plugins  	---------------------------------------------

@@ -1,0 +1,41 @@
+.sticky.contain-to-grid
+	%nav.top-bar
+		%ul.title-area
+			%li.name
+				%h1= link_to 'BeGoaled', '/admin'
+			%li.toggle-topbar.menu-icon
+				%a{ href: '#' }
+					%span Menu
+		%section.top-bar-section
+			%ul.left
+				%li.divider
+				%li
+					= link_to 'Blog', blog_admin_index_path
+				%li
+					= link_to 'Pages', pages_admin_index_path
+				%li
+					= link_to 'Users', users_admin_index_path
+				%li
+					= link_to 'Contacts', contacts_path
+				%li
+					= link_to 'App Events', app_events_admin_index_path
+			%ul.right
+				- if not( signed_in? )
+					%li
+						%a{ href: '#' }
+							Welcome
+							= @current_user
+					%li= link_to 'Login', '/users/sign_in'
+					%li= link_to 'Register', '/users/sign_up'
+				- else
+					%li.has-dropdown
+						%a{ href: '#' }
+							= @current_user.avatar_tag width: 20, valign: 'middle'
+							= @current_user
+
+						%ul.dropdown
+							%li
+								%a{ href: '/users/sign_out', 'data-method' => :delete }
+									%i.icon-signout
+									Sign Out 
+						

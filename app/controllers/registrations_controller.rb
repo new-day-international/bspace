@@ -4,15 +4,23 @@ class RegistrationsController < Devise::RegistrationsController
 		email = params[:user][:email]
 		# todo -- check validity of email param?
 
-		user = User.where( email: email ).first || 
-				User.new( email: email, full_name: params[:user][:name], name: params[:user][:name], ip: request.ip )
+		# can only register if nomination exists with status=='accepted'
+
+		user = User.where( email: email ).joins( :nomination ).where( nominations: {  status: 'accepted' } ).first 
+
+
+		if user.nil?
+			# this email is already registered for this site
+			pop_flash "#{email} is not yet eligible for membership.", :error
+			redirect_to :back
+			return false
+		end
 
 		if user.encrypted_password.present?
 			# this email is already registered for this site
 			pop_flash "#{email} is already registered.", :error
 			redirect_to :back
 			return false
-
 		end
 
 		user.password = params[:user][:password]

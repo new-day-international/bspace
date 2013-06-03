@@ -1,0 +1,30 @@
+%h2 Nominate Someone!
+
+.row
+	.large-8.columns
+		= form_for Nomination.new do |f|
+			= f.label :name
+			.large-6= f.text_field :name
+
+			= f.label :email
+			.large-6= f.text_field :email
+
+			= f.label :status
+			.large-4= f.select :status, [ ['Brainstorming', 'brainstorm'], ['For Consideration', 'consideration'], ['Under Evaluation', 'evaluation'] ]
+
+			= f.label :where
+			= f.text_field :where
+
+			= f.label :who
+			= f.text_area :who
+
+			= f.label :why
+			= f.text_area :why
+
+			.large-offset-8
+				= link_to 'Cancel', :back, class: 'button small secondary'
+				= f.submit 'Nominate', class: 'button radius'
+	.large-4.columns
+		.panel.radius
+			The member will have to join with the email provided here
+	

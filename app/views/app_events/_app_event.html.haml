@@ -1,0 +1,6 @@
+%div[app_event]
+	= app_event.user == @current_user ? 'You' : app_event.user
+	= raw app_event.content
+	.timestamp
+		= time_ago_in_words( app_event.created_at )
+		ago

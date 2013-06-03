@@ -14,13 +14,7 @@ class ApplicationController < ActionController::Base
   	end
 
   	def after_sign_in_path_for( resource )
- 		if resource.has_role?( :admin )
- 			return '/admin'
- 		elsif resource.provider.present?
- 			return provider_home_path
- 		else
- 			return user_home_path
- 		end
+ 		return user_home_path
 	end
 
   	# over-ride CanCan's method to use @current_user

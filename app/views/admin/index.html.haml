@@ -1,0 +1,32 @@
+%h1
+	Welcome,
+	= @current_user
+
+%ul.small-block-grid-2.large-block-grid-3
+	%li
+		.panel.radius
+			%h3 
+				= link_to 'Blog', blog_admin_index_path
+			
+	%li
+		.panel.radius
+			%h3 
+				= link_to 'Pages', pages_admin_index_path
+			
+	%li
+		.panel.radius
+			%h3 
+				= link_to 'Users', users_admin_index_path
+			
+	%li
+		.panel.radius
+			%h3 
+				= link_to 'Contacts', contacts_path
+			There are
+			= pluralize Contact.count, 'Contacts'
+	%li
+		.panel.radius
+			%h3 
+				= link_to 'App Events', app_events_admin_index_path
+			There are
+			= pluralize AppEvent.count, 'Event'

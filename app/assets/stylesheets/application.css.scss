@@ -13,8 +13,20 @@
  *= require_self
  */
 
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url(http://fonts.googleapis.com/css?family=VT323);
+
 html, body{
+	font-family: 'Roboto', sans-serif;
 	height: 100%;
+}
+
+h1, h2, h3, h4, h5{
+	font-family: 'Roboto', sans-serif;
+}
+
+.geek{
+	font-family: 'VT323', cursive;
 }
 
 .container{
@@ -24,6 +36,7 @@ html, body{
 	margin: 0 auto -4em;
 }
 
+.new-button{ padding-top: 1em;}
 
 .footer, .push {
 	height: 4em;

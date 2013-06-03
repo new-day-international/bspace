@@ -1,0 +1,27 @@
+.row
+	.small-6.columns
+		%h2 Users
+
+- if @users.empty?
+	.row
+		.small-6.columns.small-centered
+			.panel.radius
+				%h5 No Users Yet
+- else
+	%table.small-12.columns
+		%thead
+			%th Email
+			%th Name
+			%th Created
+			%th Status
+		%tbody
+			- @users.each do |user|
+				%tr.hover-toggler
+					%td.title-row
+						= user.email
+					%td
+						= user
+					%td
+						= user.created_at
+					%td
+						= user.status

@@ -39,6 +39,7 @@ class BaseMigration < ActiveRecord::Migration
 		end
 		add_index :contacts, :user_id
 
+
 		create_table :media, :force => true do |t|
 			t.references 		:space
 			t.references  		:user
@@ -80,6 +81,21 @@ class BaseMigration < ActiveRecord::Migration
 		add_index :media, [ :slug, :space_id ], 	unique: true
 
 
+		create_table :nominations do |t|
+			t.references 	:creator
+			t.references	:user
+			t.string		:email
+			t.string		:name
+			t.text			:who
+			t.text			:why
+			t.string		:where
+			t.string		:status # brainstorm, consideration, evaluation, accepted
+			t.timestamps
+		end
+		add_index :nominations, :creator_id
+		add_index :nominations, :user_id
+
+
 		create_table :oauth_credentials do |t|
 			t.references	:user
 			t.string		:provider
@@ -104,6 +120,9 @@ class BaseMigration < ActiveRecord::Migration
 
 
 		create_table :spaces, :force => true do |t|
+			t.references	:parent
+			t.integer		:lft
+			t.integer		:rgt
 			t.string		:name
 			t.string		:display_name
 			t.text 			:description
@@ -224,6 +243,8 @@ class BaseMigration < ActiveRecord::Migration
 		add_index :users, :unlock_token,			unique: true
 		add_index :users, :authentication_token,	unique: true
 
+
+
 		create_table :versions, :force => true do |t|
 			t.references	:item,		polymorphic: true
 			t.string		:event, 	null: false
@@ -234,6 +255,18 @@ class BaseMigration < ActiveRecord::Migration
 		end
 
 		add_index :versions, [ :item_type, :item_id ]
+
+
+		create_table :votes do |t|
+			t.references 	:votable, polymorphic: true
+			t.references 	:user
+			t.integer		:score
+			t.string		:context
+			t.text			:content
+			t.timestamps
+		end
+		add_index :votes, [ :votable_id, :votable_type ]
+		add_index :votes, :user_id
 
 	end
 

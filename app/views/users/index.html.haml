@@ -1,0 +1,14 @@
+.row
+	.large-6.columns
+		%h2 Game~B Players
+	.large-6.columns.new-button
+		= link_to 'Nominate Someone', new_nomination_path, class: 'button radius success'
+
+.row
+	.small-12.columns
+		.ul.small-block-grid-2.large-block-grid-6
+			- @members.each do |user|
+				%li
+					.panel.radius
+						= user.avatar_tag width: 32
+						= user
